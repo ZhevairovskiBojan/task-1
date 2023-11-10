@@ -4,8 +4,8 @@ const akademijaHandler = require('./handlers/akademijaHandler');
 const kursHandler = require('./handlers/kursHandler');
 const viewHandler = require('./handlers/viewHandler');
 
-const DB = require('./pkg/db/index');
 
+const DB = require('./pkg/db/index');
 
 const app = express();
 
@@ -33,7 +33,6 @@ app.delete('/api/kurs/:id', kursHandler.deleteKurs);
 
 
 app.get('/test', viewHandler.getWebsite);
-
 
 
 app.listen(process.env.PORT, err => {

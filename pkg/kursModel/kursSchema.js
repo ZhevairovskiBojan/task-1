@@ -9,7 +9,7 @@ const kursSchema = new mongoose.Schema({
         type: String,
         required: [true, "the address is required"]
     },
-    type: {
+    area: {
         type:String,
     }
 });

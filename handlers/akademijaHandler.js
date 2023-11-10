@@ -68,7 +68,7 @@ const updateAcademy = async (req, res) => {
   }
 };
 
-const deleteAcademy = async(req, res) => {
+const deleteAcademy = async (req, res) => {
   try {
     await Akademija.findByIdAndDelete(req.params.id);
     res.status(204).json({

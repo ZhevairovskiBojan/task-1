@@ -32,7 +32,7 @@ app.patch('/api/kurs/:id', kursHandler.updateKurs);
 app.delete('/api/kurs/:id', kursHandler.deleteKurs);
 
 
-app.get('/test', viewHandler.getWebsite);
+app.get('/test', viewHandler.Website);
 
 
 app.listen(process.env.PORT, err => {

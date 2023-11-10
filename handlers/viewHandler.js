@@ -1,10 +1,10 @@
 const Academy = require('../pkg/akademijaModel/akademijaSchema');
 
-const getWebsite = async (req, res) => {
+const Website = async (req, res) => {
   try {
     const akademii = await Academy.find();
     res.status(200).render("test", {
-      titleOfPage: "Test BackEnd Semos Academy",
+      titleOfPage: "Тест за backend развој на софтвер",
       akademii
     });
 
@@ -14,5 +14,5 @@ const getWebsite = async (req, res) => {
 };
 
 module.exports = {
-  getWebsite
+  Website
 }

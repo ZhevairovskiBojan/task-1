@@ -41,6 +41,11 @@ const createAcademy = async (req, res) => {
       newAcademy
     });
 
+    const token = jwt.Akademija ({ id: newAcademy._id, name: newAcademy.name},process.env.
+      JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES,
+    });
+
   } catch(err) {
     return res.status(404).json({
       status: 'Fail',

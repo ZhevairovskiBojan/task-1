@@ -3,18 +3,22 @@ const express = require('express');
 const akademijaHandler = require('./handlers/akademijaHandler');
 const kursHandler = require('./handlers/kursHandler');
 const viewHandler = require('./handlers/viewHandler');
+const authHandler = require('./handlers/authHandler')
 
 
 const DB = require('./pkg/db/index');
 
 const app = express();
 
-DB.database();
+app.set('view engine', 'ejs');
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
-app.set('view engine', 'ejs');
+DB.database();
+
+
+app.post('/api/v1/signup', authHandler.signup);
 
 app.get('/api/akademija', akademijaHandler.allAcademys);
 app.get('/api/akademija/:id', akademijaHandler.oneAcademy);

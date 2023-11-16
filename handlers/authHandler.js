@@ -1,6 +1,7 @@
 const User = require ("../pkg/userModel/userSchema");
 
 const jwt = require ("jsonwebtoken");
+const bcrypt = require ("bcryptjs");
 
 exports.signup = async (req, res) => {
     try {
@@ -32,8 +33,41 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
+        //proverka dali korisnikot ima vneseno email i pass
+      const { email, password } = req.body;
+      if(!email || !password) {
+        return res.status(400).send("Please provide email and password")
+      }
+       //proverka dali korisnikot veke postoi
+      const user = await User.findOne({ email });
+      if(!user) {
+        res.status(400).send("This user with this email doesn't exist in databe")
+      }
 
-    } catch (err) {}
+      //sporeduvame pass
+      const IsStongPasswordValid = bcrypt.compareSync(password, user.password);
+        if(!IsStongPasswordValid) {
+            return res.status(400).send("Invalid email or password");
+        }
+
+        //generirame i isprakame token
+        const token = jwt.sign(
+            { id: user._id, name: user.name },
+            process.env.JWT_SECRET, 
+            {
+                expiresIn: process.env.JWT_EXPIRES
+            }
+        );
+
+        res.status(201).json({
+            status: "success",
+            token,
+        })
+
+
+    } catch (err) {
+        return res.status(500).send("Internal server error");
+    }
 };
 
 exports.protect = async (req, res) => {

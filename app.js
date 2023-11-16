@@ -1,24 +1,33 @@
 const express = require('express');
+const jwt = require ("express-jwt");
 
 const akademijaHandler = require('./handlers/akademijaHandler');
 const kursHandler = require('./handlers/kursHandler');
 const viewHandler = require('./handlers/viewHandler');
 const authHandler = require('./handlers/authHandler')
 
-
 const DB = require('./pkg/db/index');
 
 const app = express();
+
+DB.database();
 
 app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-DB.database();
-
+app.use(jwt.expressjwt({
+  algorithms: ["HS256"],
+  secret: process.env.JWT_SECRET,
+  }).unless({
+    path: [
+      '/api/v1/signup', 'api/v1/login'
+    ],
+  })
+  );
 
 app.post('/api/v1/signup', authHandler.signup);
+app.post('/api/v1/login', authHandler.login);
 
 app.get('/api/akademija', akademijaHandler.allAcademys);
 app.get('/api/akademija/:id', akademijaHandler.oneAcademy);

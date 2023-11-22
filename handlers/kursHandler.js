@@ -1,18 +1,17 @@
 const Kurs = require('../pkg/kursModel/kursSchema');
 
-const allKurs = async(req, res) => {
+const SiteKusevi = async (req, res) => {
   try {
-    const kurs = await Kurs.find();
+    const Kursevi = await Kurs.find();
 
-    res.status(201).json({
-      status: 'Success',
-      kurs
+    res.status(200).render('welcome', {
+      title: 'Welcome',
+      Kursevi,
     });
-    
-  } catch(err) {
-    return res.status(404).json({
+  } catch (err) {
+    return res.status(500).json({
       status: 'Fail',
-      message: err
+      message: err.message,
     });
   }
 };
@@ -84,7 +83,7 @@ const deleteKurs = async(req, res) => {
 };
 
 module.exports = {
-  allKurs,
+  SiteKusevi,
   oneKurs,
   createKurs,
   updateKurs,
